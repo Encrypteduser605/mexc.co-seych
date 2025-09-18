@@ -1,0 +1,132 @@
+/* General styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header styles */
+.header {
+    background-color: #1a1a1a;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.header img {
+    height: 35px;
+}
+
+.header button {
+    background-color: #f9b400;
+    color: #1b1b1b;
+    border: none;
+    padding: 12px 30px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.header button:hover {
+    background-color: #e59d00;
+}
+
+/* Main content area */
+.main-content {
+    margin-top: 60px;
+}
+
+.login-signup-container {
+    text-align: center;
+}
+
+/* Login and Signup Forms */
+.login-form, .signup-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-form input, .signup-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    background-color: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.login-form button, .signup-form button {
+    background-color: #f9b400;
+    color: #1b1b1b;
+    padding: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-form button:hover, .signup-form button:hover {
+    background-color: #e59d00;
+}
+
+/* Dashboard styles */
+.dashboard {
+    margin-top: 60px;
+    background-color: #222;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #f9b400;
+}
+
+/* Settings section */
+.settings {
+    margin-top: 30px;
+}
+
+.settings p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.settings button {
+    background-color: #f9b400;
+    color: #1b1b1b;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.settings button:hover {
+    background-color: #e59d00;
+}
