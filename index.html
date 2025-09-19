@@ -1,552 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MEXC | Digital Asset Exchange</title>
-<link rel="icon" href="https://www.mexc.com/favicon.ico" />
-<style>
-  body {
-    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0a0a0a; color: #fff;
-  }
-  .header {
-    background-color: #000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #222;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  .logo img {
-    height: 30px;
-  }
-  .nav-buttons button {
-    background: transparent;
-    border: 1.5px solid #00bfa5;
-    color: #00bfa5;
-    font-weight: 600;
-    padding: 0.4rem 1.2rem;
-    margin-left: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .nav-buttons button:hover {
-    background-color: #00bfa5;
-    color: #000;
-  }
-  .form-container {
-    max-width: 400px;
-    background-color: #121212;
-    margin: 5rem auto;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,191,165,0.6);
-  }
-  .form-container h2 {
-    margin-bottom: 1rem;
-    font-weight: 700;
-    text-align: center;
-  }
-  .form-container input {
-    width: 100%;
-    padding: 0.7rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: #222;
-    color: #eee;
-  }
-  .form-container input::placeholder {
-    color: #666;
-  }
-  .form-container button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #00bfa5;
-    border: none;
-    border-radius: 4px;
-    color: #000;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .form-container button:hover {
-    background-color: #009e8a;
-  }
-  main.dashboard {
-    max-width: 900px;
-    margin: 3rem auto;
-    background-color: #121212;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,191,165,0.5);
-  }
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-  .dashboard-header .welcome-text h2 {
-    font-weight: 700;
-    margin: 0;
-  }
-  .dashboard-header .welcome-text p {
-    margin: 0;
-    color: #00bfa5aa;
-    font-weight: 600;
-  }
-  .logout-btn {
-    background-color: #ff3b3b;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-weight: 600;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .logout-btn:hover {
-    background-color: #cc2b2b;
-  }
-  .dashboard-nav {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-  .dashboard-nav button {
-    background-color: #1a1a1a;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 5px;
-    color: #00bfa5;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    flex: 1 1 120px;
-    text-align: center;
-    white-space: nowrap;
-  }
-  .dashboard-nav button:hover {
-    background-color: #00bfa5;
-    color: #000;
-  }
-  .balance-section {
-    background-color: #0e0e0e;
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 2rem;
-    box-shadow: inset 0 0 8px #00bfa5aa;
-  }
-  .balance-section p {
-    font-size: 1rem;
-    color: #00bfa5aa;
-    margin-bottom: 0.3rem;
-  }
-  .balance-section h3 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin: 0;
-    color: #00bfa5;
-  }
-  .account-settings {
-    background-color: #0e0e0e;
-    padding: 1.5rem 2rem;
-    border-radius: 8px;
-    box-shadow: inset 0 0 8px #00bfa5aa;
-    margin-bottom: 2rem;
-  }
-  .account-settings h4 {
-    margin-top: 0;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #00bfa5;
-  }
-  .account-settings ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-    font-size: 1rem;
-    color: #ccc;
-  }
-  .account-settings ul li {
-    padding: 0.3rem 0;
-    border-bottom: 1px solid #222;
-  }
-  .assets-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 2rem;
-  }
-  .assets-table th, .assets-table td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #222;
-    text-align: left;
-  }
-  .assets-table th {
-    color: #00bfa5;
-    font-weight: 700;
-  }
-  .orders-section {
-    background-color: #0e0e0e;
-    padding: 1.5rem 2rem;
-    border-radius: 8px;
-    box-shadow: inset 0 0 8px #00bfa5aa;
-    margin-bottom: 2rem;
-  }
-  .orders-section h4 {
-    margin-top: 0;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #00bfa5;
-  }
-  .orders-list {
-    list-style: none;
-    margin: 0;
-    padding-left: 0;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  .orders-list li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #222;
-    color: #ccc;
-    font-size: 0.9rem;
-  }
-  .error-message {
-    color: #ff4c4c;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MEXC Account Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://www.mexc.com/favicon.ico" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <img src="https://www.mexc.com/_nuxt/img/logo-dark.26a68f4.svg" alt="MEXC Logo" />
-    </div>
-    <nav class="nav-buttons" id="nav-buttons">
-      <button onclick="showLogin()">Sign In</button>
-      <button onclick="showSignup()">Sign Up</button>
-    </nav>
-  </header>
 
-  <!-- Login Form -->
-  <section class="form-container" id="login-form" style="display: none;">
-    <h2>Login to your MEXC Account</h2>
-    <div class="error-message" id="login-error" style="display:none;"></div>
-    <input type="text" id="phone" placeholder="Enter Phone Number" autocomplete="off" />
-    <input type="password" id="password" placeholder="Enter Password" autocomplete="off" />
-    <button onclick="login()">Login</button>
+<header class="header">
+  <div class="logo">
+    <img src="https://www.mexc.com/static/images/mexc-logo-white.svg" alt="MEXC Logo" />
+  </div>
+  <nav class="nav-buttons">
+    <button id="to-login">Login</button>
+    <button id="to-signup">Sign Up</button>
+  </nav>
+</header>
+
+<!-- Login Form -->
+<div class="form-container" id="login-form" style="display:none;">
+  <h2>Login to MEXC</h2>
+  <div id="login-error" class="error-message" style="display:none;"></div>
+  <input id="phone" type="text" placeholder="Phone number (7-15 digits)" autocomplete="tel" />
+  <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+  <button id="login-btn">Login</button>
+</div>
+
+<!-- Signup Form -->
+<div class="form-container" id="signup-form" style="display:none;">
+  <h2>Create Your MEXC Account</h2>
+  <div id="signup-error" class="error-message" style="display:none;"></div>
+  <input id="signup-phone" type="text" placeholder="Phone number (7-15 digits)" autocomplete="tel" />
+  <input id="signup-password" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" />
+  <button id="signup-btn">Sign Up</button>
+</div>
+
+<!-- Dashboard -->
+<main class="dashboard" id="dashboard" style="display:none;">
+
+  <div class="dashboard-header">
+    <div class="welcome-text">
+      <h2>Welcome back, User!</h2>
+      <p>Your MEXC account dashboard</p>
+    </div>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </div>
+
+  <nav class="dashboard-nav">
+    <button>Spot Trading</button>
+    <button>Margin Trading</button>
+    <button>Futures</button>
+    <button>Assets</button>
+    <button>Orders</button>
+    <button>Security</button>
+  </nav>
+
+  <section class="balance-section">
+    <p>Total Account Balance (USD)</p>
+    <h3>$0.00</h3>
   </section>
 
-  <!-- Signup Form -->
-  <section class="form-container" id="signup-form" style="display: none;">
-    <h2>Create a New Account</h2>
-    <div class="error-message" id="signup-error" style="display:none;"></div>
-    <input type="text" id="signup-phone" placeholder="Phone Number" autocomplete="off" />
-    <input type="password" id="signup-password" placeholder="Password" autocomplete="off" />
-    <button onclick="signup()">Sign Up</button>
+  <section class="account-settings">
+    <h4>Account Settings</h4>
+    <ul>
+      <li><strong>Account Status:</strong> Verified</li>
+      <li><strong>Account Created:</strong> 2018</li>
+      <li><strong>Security:</strong> 2FA Enabled</li>
+      <li><strong>Tier:</strong> VIP</li>
+      <li><strong>Password Last Changed:</strong> --</li>
+    </ul>
   </section>
 
-  <!-- Dashboard -->
-  <main class="dashboard" id="dashboard" style="display: none;">
-    <div class="dashboard-header">
-      <div class="welcome-text">
-        <h2 id="welcome-user">Welcome back!</h2>
-        <p>Your assets at a glance</p>
-      </div>
-      <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
+  <!-- Transaction history inserted by JS -->
 
-    <!-- Navigation Buttons -->
-    <div class="dashboard-nav">
-      <button onclick="window.open('https://www.mexc.com/account/assets', '_blank')">Assets</button>
-      <button onclick="window.open('https://www.mexc.com/markets', '_blank')">Markets</button>
-      <button onclick="window.open('https://www.mexc.com/trade', '_blank')">Trade</button>
-      <button onclick="window.open('https://www.mexc.com/futures', '_blank')">Futures</button>
-      <button onclick="window.open('https://www.mexc.com/wallet', '_blank')">Wallet</button>
-      <button onclick="window.open('https://www.mexc.com/launchpad', '_blank')">Launchpad</button>
-      <button onclick="window.open('https://www.mexc.com/orders', '_blank')">Orders</button>
-      <button onclick="window.open('https://www.mexc.com/referral', '_blank')">Referral</button>
-      <button onclick="window.open('https://www.mexc.com/account/security', '_blank')">Security</button>
-    </div>
+  <!-- Referral inserted by JS -->
 
-    <!-- Balance Summary -->
-    <div class="balance-section">
-      <p>Total Available Balance (USD):</p>
-      <h3 id="balance-amount">$0.00</h3>
-    </div>
+</main>
 
-    <!-- Assets Table -->
-    <section class="account-settings">
-      <h4>Your Assets</h4>
-      <table class="assets-table" id="assets-table">
-        <thead>
-          <tr>
-            <th>Asset</th>
-            <th>Available</th>
-            <th>In Orders</th>
-            <th>BTC Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Filled dynamically -->
-        </tbody>
-      </table>
-    </section>
+<script src="script.js"></script>
 
-    <!-- Account Info -->
-    <section class="account-settings">
-      <h4>Account Information</h4>
-      <ul>
-        <li><strong>Phone Number:</strong> <span id="account-phone"></span></li>
-        <li><strong>Account Created:</strong> <span id="account-created"></span></li>
-        <li><strong>Account Status:</strong> <span id="account-status">Verified</span></li>
-        <li><strong>Tier Level:</strong> <span id="account-tier">Standard</span></li>
-        <li><strong>Email:</strong> <span id="account-email">user@example.com</span></li>
-        <li><strong>2FA:</strong> <span id="account-2fa">Enabled</span></li>
-        <li><strong>Password Last Changed:</strong> <span id="password-changed"></span></li>
-      </ul>
-    </section>
-
-    <!-- Recent Orders -->
-    <section class="orders-section">
-      <h4>Recent Orders</h4>
-      <ul class="orders-list" id="orders-list">
-        <!-- Filled dynamically -->
-      </ul>
-    </section>
-
-    <!-- Referral Info -->
-    <section class="account-settings">
-      <h4>Referral Program</h4>
-      <ul>
-        <li><strong>Referral Code:</strong> <span id="referral-code"></span></li>
-        <li><strong>Referral Bonus Earned:</strong> $<span id="referral-bonus">0.00</span></li>
-        <li><strong>Referrals Count:</strong> <span id="referral-count">0</span></li>
-      </ul>
-    </section>
-  </main>
-
-<script>
-  // Helper to get/set users in localStorage
-  function getUsers() {
-    return JSON.parse(localStorage.getItem('mexcUsers') || '{}');
-  }
-  function saveUsers(users) {
-    localStorage.setItem('mexcUsers', JSON.stringify(users));
-  }
-
-  // Show/hide sections
-  function showLogin() {
-    document.getElementById('login-form').style.display = 'block';
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'none';
-    clearErrors();
-  }
-  function showSignup() {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
-    clearErrors();
-  }
-  function showDashboard(user, phone) {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-
-    // Welcome message
-    document.getElementById('welcome-user').textContent = `Welcome back, ${user.username || phone}!`;
-
-    // Balance
-    document.getElementById('balance-amount').textContent = `$${user.balance.toFixed(2)}`;
-
-    // Account info
-    document.getElementById('account-phone').textContent = phone;
-    document.getElementById('account-created').textContent = user.createdDate;
-    document.getElementById('account-status').textContent = user.verified ? 'Verified' : 'Unverified';
-    document.getElementById('account-tier').textContent = user.tier || 'Standard';
-    document.getElementById('account-email').textContent = user.email || 'user@example.com';
-    document.getElementById('account-2fa').textContent = user.twoFAEnabled ? 'Enabled' : 'Disabled';
-    document.getElementById('password-changed').textContent = user.passwordChanged || 'N/A';
-
-    // Referral info
-    document.getElementById('referral-code').textContent = user.referralCode || 'N/A';
-    document.getElementById('referral-bonus').textContent = user.referralBonus ? user.referralBonus.toFixed(2) : '0.00';
-    document.getElementById('referral-count').textContent = user.referralsCount || 0;
-
-    // Populate assets table
-    populateAssetsTable(user.assets || []);
-
-    // Populate recent orders list
-    populateOrdersList(user.recentOrders || []);
-  }
-  function clearErrors() {
-    document.getElementById('login-error').style.display = 'none';
-    document.getElementById('signup-error').style.display = 'none';
-  }
-
-  function populateAssetsTable(assets) {
-    const tbody = document.getElementById('assets-table').querySelector('tbody');
-    tbody.innerHTML = '';
-    if (assets.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#666;">No assets found.</td></tr>';
-      return;
-    }
-    assets.forEach(asset => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${asset.symbol}</td>
-        <td>${asset.available.toFixed(4)}</td>
-        <td>${asset.inOrders.toFixed(4)}</td>
-        <td>${asset.btcValue.toFixed(6)}</td>
-      `;
-      tbody.appendChild(row);
-    });
-  }
-
-  function populateOrdersList(orders) {
-    const list = document.getElementById('orders-list');
-    list.innerHTML = '';
-    if (orders.length === 0) {
-      list.innerHTML = '<li style="color:#666;text-align:center;">No recent orders.</li>';
-      return;
-    }
-    orders.forEach(order => {
-      const li = document.createElement('li');
-      li.textContent = `${order.date} | ${order.symbol} | ${order.type} | Qty: ${order.quantity} | Price: $${order.price} | Status: ${order.status}`;
-      list.appendChild(li);
-    });
-  }
-
-  // Signup function
-  function signup() {
-    clearErrors();
-    const phone = document.getElementById('signup-phone').value.trim();
-    const password = document.getElementById('signup-password').value;
-
-    if (!phone || !password) {
-      showError('signup-error', 'Please fill in all fields.');
-      return;
-    }
-    // Simple phone number check
-    if (!/^\d{7,15}$/.test(phone)) {
-      showError('signup-error', 'Phone number must be 7 to 15 digits.');
-      return;
-    }
-    if (password.length < 6) {
-      showError('signup-error', 'Password must be at least 6 characters.');
-      return;
-    }
-
-    const users = getUsers();
-    if (users[phone]) {
-      showError('signup-error', 'Phone number already registered.');
-      return;
-    }
-
-    // Create demo data for the user
-    const newUser = {
-      password, // plaintext password (demo only)
-      balance: 1234.56,
-      createdDate: new Date().toLocaleDateString(),
-      verified: true,
-      tier: "VIP 1",
-      username: `User${phone.slice(-4)}`,
-      email: `user${phone.slice(-4)}@mexc.com`,
-      twoFAEnabled: true,
-      passwordChanged: new Date(Date.now() - 86400000 * 30).toLocaleDateString(), // 30 days ago
-      referralCode: `REF${phone.slice(-6)}`,
-      referralBonus: 45.67,
-      referralsCount: 5,
-      assets: [
-        {symbol: 'BTC', available: 0.0234, inOrders: 0.001, btcValue: 0.0244},
-        {symbol: 'ETH', available: 1.45, inOrders: 0.3, btcValue: 0.0450},
-        {symbol: 'USDT', available: 560.12, inOrders: 0, btcValue: 0.0185},
-        {symbol: 'XRP', available: 1300, inOrders: 300, btcValue: 0.0071},
-      ],
-      recentOrders: [
-        {date: '2025-09-15', symbol: 'BTC/USDT', type: 'Buy', quantity: 0.01, price: 28000, status: 'Completed'},
-        {date: '2025-09-13', symbol: 'ETH/USDT', type: 'Sell', quantity: 0.5, price: 1800, status: 'Cancelled'},
-        {date: '2025-09-10', symbol: 'XRP/USDT', type: 'Buy', quantity: 1000, price: 0.5, status: 'Completed'},
-      ]
-    };
-
-    users[phone] = newUser;
-    saveUsers(users);
-
-    alert('Account created successfully! Please log in.');
-    showLogin();
-  }
-
-  // Login function
-  function login() {
-    clearErrors();
-    const phone = document.getElementById('phone').value.trim();
-    const password = document.getElementById('password').value;
-
-    if (!phone || !password) {
-      showError('login-error', 'Please fill in all fields.');
-      return;
-    }
-
-    const users = getUsers();
-    if (!users[phone]) {
-      showError('login-error', 'No account found with this phone number.');
-      return;
-    }
-
-    if (users[phone].password !== password) {
-      showError('login-error', 'Incorrect password.');
-      return;
-    }
-
-    // Save logged in user to sessionStorage
-    sessionStorage.setItem('loggedInUser', phone);
-    showDashboard(users[phone], phone);
-  }
-
-  // Logout function
-  function logout() {
-    sessionStorage.removeItem('loggedInUser');
-    showLogin();
-  }
-
-  // Show error helper
-  function showError(id, message) {
-    const el = document.getElementById(id);
-    el.textContent = message;
-    el.style.display = 'block';
-  }
-
-  // On page load, check if user logged in
-  window.onload = function() {
-    const loggedInUser = sessionStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-      const users = getUsers();
-      if (users[loggedInUser]) {
-        showDashboard(users[loggedInUser], loggedInUser);
-        return;
-      } else {
-        // corrupted session?
-        sessionStorage.removeItem('loggedInUser');
-      }
-    }
-    showLogin();
-  }
-</script>
 </body>
 </html>
