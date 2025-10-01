@@ -235,7 +235,7 @@ function signup() {
     verified: true,
     tier: 'VIP',
     twoFA: true,
-    passwordLastChanged: new Date('2024-06-15').toISOString(),
+    passwordLastChanged: new Date('2025-06-15').toISOString(),
     createdAt: new Date('2018-01-15').toISOString(),
     assets: {
       BTC: { available: 1.23456789, inOrders: 0.05, btcValue: 1.28456789 },
@@ -328,3 +328,4 @@ document.getElementById('logout-btn').addEventListener('click', (e) => {
 
 // Initial load
 showLogin();
+
